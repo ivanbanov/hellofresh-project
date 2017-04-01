@@ -1,26 +1,20 @@
 // @flow
 
-import React, { PropTypes } from 'react';
+import React from 'react';
 import styles from './styles.styl';
-import Col from '../col';
 
-function Grid({ children }: Object): React$Element<*> {
-  console.log(children);
+class Grid extends React.Component {
+  static displayName = 'Grid';
 
-  return (
-    <div className={styles.grid}>
-      {children}
-    </div>
-  );
+  render() {
+    const { children } = this.props;
+
+    return (
+      <div className={styles.grid}>
+        {children}
+      </div>
+    );
+  }
 }
-
-Grid.displayName = 'Grid';
-
-Grid.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.instanceOf(Col),
-    PropTypes.arrayOf(PropTypes.instanceOf(Col)),
-  ]),
-};
 
 export default Grid;
