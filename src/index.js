@@ -6,16 +6,16 @@ import {
   BrowserRouter as Router,
   Route,
 } from 'react-router-dom';
-import './ui/styles/setup.styl';
+import 'src/ui/styles/setup.styl';
 
-import Col from './ui/components/col';
+import LoginScreen from 'src/screens/login';
 
 class App extends React.Component {
   render() {
     return (
       <Router>
         <div>
-          <Route path="/login" component={() => (<Col>Login</Col>)} />
+          <Route path="/login" component={LoginScreen} />
           <Route path="/recipes" component={() => (<h1>Recipes</h1>)} />
         </div>
       </Router>
@@ -23,4 +23,4 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(<App />, document.querySelector('#app'));
+ReactDOM.render(<App />, document.querySelector('#root'));

@@ -30,6 +30,7 @@
     "comma-dangle": [2, "always-multiline"],
     "no-cond-assign": [2, "always"],
     "class-methods-use-this": 0,
+    "no-underscore-dangle": "allow",
 
     // Require braces in arrow function body
     "arrow-body-style": 0,

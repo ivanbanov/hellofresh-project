@@ -2,9 +2,10 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-const hotMiddlewareScript = 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000&reload=true';
+const hotMiddlewareScript = 'webpack-hot-middleware/client?http://localhost:3000=/__webpack_hmr&timeout=20000&reload=true'; //eslint-disable-line
 
 const pathsObj = require('./paths');
+
 const PATHS = pathsObj.PATHS;
 const PUBLIC_PATH = pathsObj.PUBLIC_PATH;
 const ROOT_PATH = pathsObj.ROOT_PATH;
@@ -23,20 +24,34 @@ module.exports = {
     filename: '[name].js',
   },
 
+  resolve: {
+    alias: {
+      src: PATHS.src,
+    },
+    modules: [
+      `${PATHS.src}/ui`,
+      `${ROOT_PATH}/node_modules`,
+    ],
+  },
+
   module: {
     rules: [
+      // {
+      //   test: /\.jsx?$/,
+      //   exclude: /node_modules/,
+      //   enforce: 'pre',
+      //   use: [
+      //     {
+      //       loader: 'eslint-loader',
+      //       options: {
+      //         configFile: `${PATHS.webpack}/.eslintrc`,
+      //       },
+      //     },
+      //   ],
+      // },
       {
-        test: /\.jsx?$/,
-        exclude: /node_modules/,
-        enforce: 'pre',
-        use: [
-          {
-            loader: 'eslint-loader',
-            options: {
-              configFile: `${PATHS.webpack}/.eslintrc`,
-            },
-          },
-        ],
+        test: /\.(jpg|png|svg)$/,
+        loader: 'file-loader',
       },
       {
         test: /\.jsx?$/,
@@ -51,7 +66,7 @@ module.exports = {
         ],
       },
       {
-        test: /(\.css|\.styl)$/,
+        test: /\.(css|styl)$/,
         use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
           use: [
@@ -76,6 +91,7 @@ module.exports = {
               options: {
                 'include css': true,
                 preferPathResolver: 'webpack',
+                import: ['~styles/setup'],
               },
             },
           ],
@@ -91,14 +107,4 @@ module.exports = {
       template: `${PATHS.src}/index.html`,
     }),
   ],
-
-  resolve: {
-    alias: {
-      src: PATHS.src,
-    },
-    modules: [
-      `${PATHS.src}/ui`,
-      `${ROOT_PATH}/node_modules`,
-    ],
-  },
 };
