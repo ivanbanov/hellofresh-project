@@ -20,6 +20,7 @@ class Col extends React.Component {
       PropTypes.oneOf(COLS),
       PropTypes.object,
     ]),
+    className: PropTypes.string,
   };
 
   static defaultProps = {
@@ -31,7 +32,7 @@ class Col extends React.Component {
       gutter,
       size,
       children,
-      ...otherProps
+      className,
     } = this.props;
 
     let gutterConfig: Object;
@@ -50,7 +51,7 @@ class Col extends React.Component {
 
     if (typeof size === 'number') {
       sizeConfig = [{
-        [`col-small-${size}`]: true,
+        [styles[`col-small-${size}`]]: true,
       }];
     } else if (typeof size === 'object') {
       sizeConfig = Object
@@ -73,11 +74,14 @@ class Col extends React.Component {
       { [styles[`gutter-right-${gutterConfig.right}`]]: !!gutterConfig.right },
 
       // cols
-      ...sizeConfig
+      ...sizeConfig,
+
+      // other classes
+      className
     );
 
     return (
-      <div className={classes} {...otherProps}>
+      <div className={classes}>
         {children}
       </div>
     );

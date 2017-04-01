@@ -7,13 +7,10 @@ class Container extends React.Component {
   static displayName = 'Container';
 
   render() {
-    const {
-      children,
-      ...otherProps
-    } = this.props;
+    const { children } = this.props;
 
     return (
-      <div className={styles.container} {...otherProps}>
+      <div className={styles.container}>
         {children}
       </div>
     );

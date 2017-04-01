@@ -1,16 +1,28 @@
 // @flow
 
-import React from 'react';
+import React, { PropTypes } from 'react';
+import classNames from 'classnames';
 import styles from './styles.styl';
 
 class Grid extends React.Component {
   static displayName = 'Grid';
 
+  static propTypes = {
+    fluid: PropTypes.bool,
+  };
+
+  static defaultProps = {
+    fluid: false,
+  };
+
   render() {
-    const { children } = this.props;
+    const {
+      fluid,
+      children,
+    } = this.props;
 
     return (
-      <div className={styles.grid}>
+      <div className={classNames(styles.grid, { fluid })}>
         {children}
       </div>
     );
