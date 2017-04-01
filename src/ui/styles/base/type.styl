@@ -9,10 +9,19 @@ $fontSizeLarge = 1.5rem;
 $fontSizeMedium = 1rem;
 $fontSizeSmall = .75rem;
 
-.text-huge { font-size: $fontSizeHuge; }
-.text-large { font-size: $fontSizeLarge; }
-.text-medium { font-size: $fontSizeMedium; }
-.text-small { font-size: $fontSizeSmall; }
+:global {
+  .text-huge { font-size: $fontSizeHuge; }
+  .text-large { font-size: $fontSizeLarge; }
+  .text-medium { font-size: $fontSizeMedium; }
+  .text-small { font-size: $fontSizeSmall; }
+  .text-left { text-align: left; }
+  .text-right { text-align: right; }
+  .text-center { text-align: center; }
+  .text-justify { text-align: justify; }
+  .uppercase { text-transform: uppercase; }
+  .lowercase { text-transform: lowercase; }
+  .captalize { text-transform: capitalize; }
+}
 
 a {
   color: $colors.green;
