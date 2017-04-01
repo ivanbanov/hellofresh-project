@@ -5,13 +5,6 @@ import classNames from 'classnames';
 import styles from './styles.styl';
 import mediaQuery from '../../styles/mixins/media-query.styl';
 
-const GUTTERS: Array<string> = [
-  'small',
-  'medium',
-  'large',
-  'huge',
-];
-
 const MAX_COLS: number = Number(styles.COLS);
 const COLS: Array<number> = [...Array(MAX_COLS)].map((_, i) => (i + 1));
 
@@ -21,12 +14,7 @@ class Col extends React.Component {
   static propTypes = {
     gutter: PropTypes.oneOfType([
       PropTypes.string,
-      PropTypes.shape({
-        top: PropTypes.oneOf(GUTTERS),
-        bottom: PropTypes.oneOf(GUTTERS),
-        left: PropTypes.oneOf(GUTTERS),
-        right: PropTypes.oneOf(GUTTERS),
-      }),
+      PropTypes.object,
     ]),
     size: PropTypes.oneOfType([
       PropTypes.oneOf(COLS),
