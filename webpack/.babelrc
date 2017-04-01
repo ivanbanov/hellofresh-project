@@ -1,7 +1,8 @@
 {
   "presets": [
     "es2017",
-    "react"
+    "react",
+    "flow"
   ],
 
   "plugins": [
