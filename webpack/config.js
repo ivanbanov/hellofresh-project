@@ -4,8 +4,10 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const hotMiddlewareScript = 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000&reload=true';
 
-const PATHS = require('./paths').PATHS;
-const PUBLIC_PATH = require('./paths').PUBLIC_PATH;
+const pathsObj = require('./paths');
+const PATHS = pathsObj.PATHS;
+const PUBLIC_PATH = pathsObj.PUBLIC_PATH;
+const ROOT_PATH = pathsObj.ROOT_PATH;
 
 module.exports = {
   devtool: 'source-map',
@@ -23,19 +25,19 @@ module.exports = {
 
   module: {
     rules: [
-      // {
-      //   test: /\.jsx?$/,
-      //   exclude: /node_modules/,
-      //   enforce: 'pre',
-      //   use: [
-      //     {
-      //       loader: 'eslint-loader',
-      //       options: {
-      //         configFile: `${PATHS.webpack}/.eslintrc`,
-      //       },
-      //     },
-      //   ],
-      // },
+      {
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        enforce: 'pre',
+        use: [
+          {
+            loader: 'eslint-loader',
+            options: {
+              configFile: `${PATHS.webpack}/.eslintrc`,
+            },
+          },
+        ],
+      },
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
@@ -73,6 +75,7 @@ module.exports = {
               loader: 'stylus-loader',
               options: {
                 'include css': true,
+                preferPathResolver: 'webpack',
               },
             },
           ],
@@ -88,4 +91,14 @@ module.exports = {
       template: `${PATHS.src}/index.html`,
     }),
   ],
+
+  resolve: {
+    alias: {
+      src: PATHS.src,
+    },
+    modules: [
+      `${PATHS.src}/ui`,
+      `${ROOT_PATH}/node_modules`,
+    ],
+  },
 };
