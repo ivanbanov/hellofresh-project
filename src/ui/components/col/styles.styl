@@ -1,0 +1,42 @@
+@require '../../styles/mixins/media-query';
+
+$cols = 12;
+
+$gutters = {
+  small: .5rem,
+  medium: 1rem,
+  large: 1.5rem,
+  huge: 2rem,
+};
+
+:export {COLS: $cols};
+
+// cols
+for $breakpoint in $breakpoints {
+  +media($breakpoint) {
+    for $i in (1 .. $cols) {
+      .col-{ $breakpoint }-{ $i } {
+          width: ($i * 100 / $cols)%;
+      }
+    }
+  }
+}
+
+// gutters
+for $gutter, $value in $gutters {
+  .gutter-top-{ $gutter } {
+    padding-top: $value;
+  }
+
+  .gutter-bottom-{ $gutter } {
+    padding-bottom: $value;
+  }
+
+  .gutter-left-{ $gutter } {
+    padding-left: $value;
+  }
+
+  .gutter-right-{ $gutter } {
+    padding-right: $value;
+  }
+}

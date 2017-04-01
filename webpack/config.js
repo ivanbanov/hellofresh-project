@@ -23,19 +23,19 @@ module.exports = {
 
   module: {
     rules: [
-      {
-        test: /\.jsx?$/,
-        exclude: /node_modules/,
-        enforce: 'pre',
-        use: [
-          {
-            loader: 'eslint-loader',
-            options: {
-              configFile: `${PATHS.webpack}/.eslintrc`,
-            },
-          },
-        ],
-      },
+      // {
+      //   test: /\.jsx?$/,
+      //   exclude: /node_modules/,
+      //   enforce: 'pre',
+      //   use: [
+      //     {
+      //       loader: 'eslint-loader',
+      //       options: {
+      //         configFile: `${PATHS.webpack}/.eslintrc`,
+      //       },
+      //     },
+      //   ],
+      // },
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
@@ -62,17 +62,17 @@ module.exports = {
               },
             },
             {
-              loader: 'stylus-loader',
-              options: {
-                'include css': true,
-              },
-            },
-            {
               loader: 'postcss-loader',
               options: {
                 plugins: [
                   require('autoprefixer'),
                 ],
+              },
+            },
+            {
+              loader: 'stylus-loader',
+              options: {
+                'include css': true,
               },
             },
           ],
@@ -83,7 +83,6 @@ module.exports = {
 
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin(),
     new ExtractTextPlugin('styles.css'),
     new HtmlWebpackPlugin({
       template: `${PATHS.src}/index.html`,

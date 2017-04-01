@@ -1,0 +1,72 @@
+$breakpoints = {
+  small: 0,
+  medium: 576px,
+  large: 992px,
+  wide: 1440px,
+};
+
+for $breakpoint, $value in $breakpoints {
+  :export {
+    {$breakpoint}: $value
+  }
+}
+
+media($size, $only = false) {
+  $breakpointVal = $breakpoints[$size];
+  $isSmallest = false;
+  $i = 0;
+
+  // Check if the size sent is the smallest
+  for $breakpoint in $breakpoints {
+    $i = $i + 1;
+
+    if $i == 1 && $breakpoint == $size {
+      $isSmallest = true;
+    }
+  }
+
+  // Set the media query only for the specific breakpoint
+  if $only {
+    $i = 0
+
+    for $breakpoint in $breakpoints {
+      $i = $i + 1;
+      $nextBreakpointVal = values($breakpoints)[$i];
+
+      if $size == $breakpoint {
+        // Smallest
+        if $isSmallest {
+          @media screen and (max-width: $nextBreakpointVal - 1) {
+            { block }
+          }
+        }
+
+        // Biggest
+        else if $i == length($breakpoints) {
+          @media screen and (min-width: $breakpointVal) {
+            { block }
+          }
+        }
+
+        // Others
+        else {
+          @media screen and (min-width: $breakpointVal) and (max-width: $nextBreakpointVal - 1) {
+            { block }
+          }
+        }
+      }
+    }
+  }
+
+  // Media queries based on mobile first
+  else {
+    // Smallest size doesn't need the media query specification
+    if $isSmallest {
+      { block }
+    } else {
+      @media screen and ( min-width: $breakpointVal ) {
+        { block }
+      }
+    }
+  }
+}
