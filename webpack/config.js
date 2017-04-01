@@ -3,19 +3,24 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const hotMiddlewareScript = 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000&reload=true';
-const PATHS = require('./paths');
+
+const PATHS = require('./paths').PATHS;
+const PUBLIC_PATH = require('./paths').PUBLIC_PATH;
 
 module.exports = {
   devtool: 'source-map',
+
   entry: [
     hotMiddlewareScript,
     `${PATHS.src}/index.js`,
   ],
+
   output: {
     path: PATHS.dist,
-    publicPath: PATHS.public,
+    publicPath: PUBLIC_PATH,
     filename: '[name].js',
   },
+
   module: {
     rules: [
       {
@@ -44,26 +49,38 @@ module.exports = {
         ],
       },
       {
-        test: /\.styl$/,
-        use: [
-          { loader: 'style-loader' },
-          {
-            loader: 'css-loader',
-            options: {
-              modules: true,
-              localIdentName: '[name]__[local]__[hash:base64:5]',
+        test: /(\.css|\.styl)$/,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                sourceMap: true,
+                modules: true,
+                localIdentName: '[name]__[local]___[hash:base64:5]',
+              },
             },
-          },
-          {
-            loader: 'stylus-loader',
-            options: {
-              'include css': true,
+            {
+              loader: 'stylus-loader',
+              options: {
+                'include css': true,
+              },
             },
-          },
-        ],
+            {
+              loader: 'postcss-loader',
+              options: {
+                plugins: [
+                  require('autoprefixer'),
+                ],
+              },
+            },
+          ],
+        }),
       },
     ],
   },
+
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),

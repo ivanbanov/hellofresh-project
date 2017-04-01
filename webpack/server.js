@@ -7,7 +7,7 @@ const config = require('./config.js');
 const PORT = 3000;
 const app = express();
 
-const PATHS = require('./paths');
+const PATHS = require('./paths').PATHS;
 
 const compiler = webpack(config);
 const middleware = webpackMiddleware(compiler, {

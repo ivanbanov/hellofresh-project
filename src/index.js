@@ -6,7 +6,7 @@ import {
   BrowserRouter as Router,
   Route,
 } from 'react-router-dom';
-import './styles.styl';
+import './ui/setup.styl';
 
 class App extends React.Component {
   render() {

@@ -1,0 +1,21 @@
+@require './colors';
+@require './type';
+
+*,
+*:after,
+*:before {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 14px;
+}
+
+body {
+  font: $fontSizeBase\/$lineHeight $fontFamily;
+  color: $colors.medium;
+}
+
+img {
+  max-width: 100%;
+}
