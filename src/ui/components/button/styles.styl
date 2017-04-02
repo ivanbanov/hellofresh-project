@@ -1,0 +1,39 @@
+.button {
+  padding: rem(5px);
+  background-color: $colors.green;
+  border: 1px solid $colors.darkGreen;
+  border-bottom-width: 3px;
+  color: $colors.white;
+  text-align: center;
+  height: rem(40px);
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+
+  &.isDisabled {
+    pointer-events: none;
+    border-color: $colors.dark;
+    background-color: $colors.medium;
+    color: $colors.light;
+  }
+
+  &.block {
+    width: 100%;
+  }
+
+  &:focus {
+    background-color: $colors.darkGreen;
+    border-color: $colors.dark;
+  }
+
+  &:hover {
+    text-decoration: none;
+  }
+
+  &:active {
+    border-bottom-width: 1px;
+  }
+}

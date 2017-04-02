@@ -1,11 +1,12 @@
 const express = require('express');
+
 const app = express();
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 
 const FIXTURE = require('./fixture');
 
-const USER = 'user@hellofresh.com';
+const EMAIL = 'user@hellofresh.com';
 const PASSWORD = '123';
 
 const PORT = 3001;
@@ -16,14 +17,25 @@ app.use(morgan('tiny'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+
+  next();
+});
+
 app.get('/', (req, res) => {
   res.status(200).send('HelloFresh Api');
 });
 
 app.post('/login', (req, res) => {
-  if (req.body.user === USER && req.body.password === PASSWORD) {
+  if (req.body.email === EMAIL && req.body.password === PASSWORD) {
     return res.status(200).send({
       status: 'ok',
+      user: {
+        name: 'User HelloFresh',
+        email: EMAIL,
+      },
       token: TOKEN,
     });
   }

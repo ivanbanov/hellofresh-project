@@ -19,6 +19,7 @@ class Input extends React.Component {
     value: PropTypes.string,
     name: PropTypes.string,
     required: PropTypes.bool,
+    onChange: PropTypes.func,
     validation: PropTypes.oneOfType([
       PropTypes.func,
       PropTypes.arrayOf(PropTypes.func),
@@ -28,6 +29,7 @@ class Input extends React.Component {
   static defaultProps = {
     type: 'text',
     required: false,
+    onChange: () => null,
   };
 
   state: State = {
@@ -37,6 +39,7 @@ class Input extends React.Component {
   validations: Array<Function> = [];
 
   _validation: Function;
+  _onChange: Function;
 
   constructor(props: Object) {
     super(props);
@@ -55,6 +58,7 @@ class Input extends React.Component {
     }
 
     this._validation = this._validation.bind(this);
+    this._onChange = this._onChange.bind(this);
   }
 
   _validation(value?: string): boolean {
@@ -63,6 +67,13 @@ class Input extends React.Component {
     this.setState({ isValid });
 
     return isValid;
+  }
+
+  _onChange(event: Event): void {
+    const { onChange } = this.props;
+
+    this.setState({ isValid: true });
+    onChange(event);
   }
 
   render() {
@@ -84,6 +95,7 @@ class Input extends React.Component {
           name={name}
           className={styles.input}
           onBlur={event => this._validation(event.target.value)}
+          onChange={this._onChange}
         />
 
         {
