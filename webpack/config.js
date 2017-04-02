@@ -30,7 +30,7 @@ module.exports = {
     },
     modules: [
       `${PATHS.src}/ui`,
-      `${ROOT_PATH}/node_modules`,
+      `${PATHS.root}/node_modules`,
     ],
   },
 
@@ -44,7 +44,7 @@ module.exports = {
       //     {
       //       loader: 'eslint-loader',
       //       options: {
-      //         configFile: `${PATHS.webpack}/.eslintrc`,
+      //         configFile: `${PATHS.root}/.eslintrc`,
       //       },
       //     },
       //   ],
@@ -60,7 +60,7 @@ module.exports = {
           {
             loader: 'babel-loader',
             options: {
-              extends: `${PATHS.webpack}/.babelrc`,
+              extends: `${PATHS.root}/.babelrc`,
             },
           },
         ],

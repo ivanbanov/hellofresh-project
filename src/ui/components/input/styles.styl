@@ -1,0 +1,21 @@
+.input {
+  padding: .75rem;
+  border: 1px solid $colors.light;
+  border-radius: rem(3px);
+  display: block;
+  width: 100%;
+  height: rem(40px);
+  font-size: 1rem;
+  outline: none;
+
+  &::placeholder {
+    color: $colors.light;
+  }
+
+  &:focus {
+    border-color: $colors.medium;
+  }
+}
+
+.error .input { border-color: $colors.warning; }
+.error .errorMessage { color: $colors.warning; }

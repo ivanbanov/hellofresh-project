@@ -3,9 +3,9 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import Col from 'src/ui/components/col';
-import Container from 'src/ui/components/container';
 import Input from 'src/ui/components/input';
 import imgLogo from 'src/ui/assets/images/hellofresh-logo-2.png';
+import isEmail from 'src/validators/is-email';
 import styles from './styles.styl';
 
 class LoginScreen extends React.Component {
@@ -13,22 +13,31 @@ class LoginScreen extends React.Component {
 
   _renderForm() {
     return (
-      <form className="text-large">
+      <form>
         <Col>
           <Col gutter={{ bottom: 'small' }}>
             <label>Email</label>
           </Col>
           <Col>
-            <Input name="email" placeholder="user@hellofresh.com" />
+            <Input
+              name="email"
+              placeholder="user@hellofresh.com"
+              validation={isEmail}
+              required
+            />
           </Col>
         </Col>
 
-        <Col gutter={{top: 'medium'}}>
+        <Col gutter={{ top: 'medium' }}>
           <Col gutter={{ bottom: 'small' }}>
             <label>Password</label>
           </Col>
           <Col>
-            <Input name="password" type="password" />
+            <Input
+              name="password"
+              type="password"
+              required
+            />
           </Col>
         </Col>
       </form>
@@ -45,12 +54,14 @@ class LoginScreen extends React.Component {
         <Col
           size={{ small: 12, medium: 8, large: 5 }}
           gutter={{
-            top: 'medium', bottom: 'large',
-            left: 'medium', right: 'medium',
+            top: 'medium',
+            bottom: 'large',
+            left: 'medium',
+            right: 'medium',
           }}
         >
           <Col
-            size={7} gutter={{bottom: 'large'}}
+            size={7} gutter={{ bottom: 'large' }}
             className={styles.logo}
           >
             <img src={imgLogo} />
