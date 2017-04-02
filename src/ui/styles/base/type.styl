@@ -1,26 +1,44 @@
 @require './colors';
 
-$fontFamily = 'Helvetica Neue', Helvetica, Arial, sans-serif;
-$fontSizeBase = 14px;
+$font = {
+  size: {
+    base: 14px,
+    huge: 2rem,
+    large: 1.5rem,
+    medium: 1rem,
+    small: .75rem,
+  },
+  weight: {
+    bold: 700,
+    semibold: 500,
+  },
+};
+
+$font.family = Helvetica Neue, Helvetica, Arial, sans-serif;
+
 $lineHeight = 1.4;
 
-$fontSizeHuge = 2rem;
-$fontSizeLarge = 1.5rem;
-$fontSizeMedium = 1rem;
-$fontSizeSmall = .75rem;
-
 :global {
-  .text-huge { font-size: $fontSizeHuge; }
-  .text-large { font-size: $fontSizeLarge; }
-  .text-medium { font-size: $fontSizeMedium; }
-  .text-small { font-size: $fontSizeSmall; }
+  // size
+  .text-huge { font-size: $font.size.huge; }
+  .text-large { font-size: $font.size.large; }
+  .text-medium { font-size: $font.size.medium; }
+  .text-small { font-size: $font.size.small; }
+
+  // alignment
   .text-left { text-align: left; }
   .text-right { text-align: right; }
   .text-center { text-align: center; }
   .text-justify { text-align: justify; }
-  .uppercase { text-transform: uppercase; }
-  .lowercase { text-transform: lowercase; }
-  .captalize { text-transform: capitalize; }
+
+  // weight
+  .text-bold { text-align: $font.weight.bold; }
+  .text-semibold { text-align: $font.weight.semibold; }
+
+  // case transform
+  .text-uppercase { text-transform: uppercase; }
+  .text-lowercase { text-transform: lowercase; }
+  .text-captalize { text-transform: capitalize; }
 }
 
 a {
