@@ -2,19 +2,17 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-const hotMiddlewareScript = 'webpack-hot-middleware/client?http://localhost:3000=/__webpack_hmr&timeout=20000&reload=true'; //eslint-disable-line
-
 const pathsObj = require('./paths');
 
 const PATHS = pathsObj.PATHS;
 const PUBLIC_PATH = pathsObj.PUBLIC_PATH;
-const ROOT_PATH = pathsObj.ROOT_PATH;
 
 module.exports = {
   devtool: 'source-map',
 
   entry: [
-    hotMiddlewareScript,
+    'react-hot-loader/patch',
+    'webpack-hot-middleware/client?http://localhost:3000/',
     `${PATHS.src}/index.js`,
   ],
 
@@ -92,6 +90,10 @@ module.exports = {
                 'include css': true,
                 preferPathResolver: 'webpack',
                 import: ['~styles/setup'],
+                paths: [
+                  `${PATHS.src}/ui`,
+                  `${PATHS.src}/screens`,
+                ],
               },
             },
           ],
@@ -102,6 +104,8 @@ module.exports = {
 
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
+    new webpack.NamedModulesPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
     new ExtractTextPlugin('styles.css'),
     new HtmlWebpackPlugin({
       template: `${PATHS.src}/index.html`,

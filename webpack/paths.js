@@ -11,5 +11,5 @@ const PATHS = {
 
 module.exports = {
   PATHS,
-  PUBLIC_PATH
+  PUBLIC_PATH,
 };
