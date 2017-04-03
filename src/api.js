@@ -6,6 +6,7 @@ const api = axios.create({
     post: {
       'Content-Type': 'application/x-www-form-urlencoded',
     },
+    token: window.localStorage.getItem('token'),
   },
 });
 

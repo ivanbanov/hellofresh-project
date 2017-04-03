@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, token');
 
   next();
 });
@@ -50,13 +50,13 @@ app.get('/recipes', (req, res) => {
   if (req.headers.token === TOKEN) {
     return res.status(200).send({
       status: 'ok',
-      data: FIXTURE,
+      recipes: FIXTURE,
     });
   }
 
   return res.status(403).send({
     status: 'error',
-    data: 'User not authenticated',
+    message: 'User not authenticated',
   });
 });
 

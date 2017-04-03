@@ -7,6 +7,11 @@ import {
   compose,
 } from 'redux';
 import thunkMiddleware from 'redux-thunk';
+import {
+  connectRouter,
+  routerMiddleware,
+} from 'connected-react-router';
+import { history } from 'src/router';
 import authReducer from 'src/reducers/auth';
 
 const reducers = combineReducers({
@@ -14,9 +19,12 @@ const reducers = combineReducers({
 });
 
 export default createStore(
-  reducers,
+  connectRouter(history)(reducers),
   compose(
-    applyMiddleware(thunkMiddleware),
+    applyMiddleware(
+      thunkMiddleware,
+      routerMiddleware(history)
+    ),
     window.devToolsExtension ? window.devToolsExtension() : fn => fn
   )
 );
