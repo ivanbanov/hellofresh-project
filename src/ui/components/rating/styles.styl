@@ -1,0 +1,19 @@
+.rating {
+  display: flex;
+  font-size: 1.5em;
+  line-height: 1;
+}
+
+.iconStar {
+  fill: $colors.medium;
+  flex: 1;
+  text-align: center;
+
+  svg {
+    cursor: pointer;
+  }
+
+  &.isActive {
+    fill: $colors.orange;
+  }
+}

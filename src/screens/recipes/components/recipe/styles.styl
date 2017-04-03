@@ -1,0 +1,45 @@
+$recipeRadius = rem(10px);
+
+.recipe {
+  background-color: $colors.white;
+  border-radius: $recipeRadius;
+  border: 1px solid $colors.light;
+  position: relative;
+
+  &:hover {
+    border-color: $colors.medium;
+  }
+}
+
+.thumb {
+  border-radius: $recipeRadius $recipeRadius 0 0;
+  display: block;
+}
+
+.favoriteIcon {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 50px;
+  height: 50px;
+  padding: 5px;
+  background-color: $colors.white;
+  border-radius: 0 $recipeRadius 0 $recipeRadius;
+  fill: $colors.disable;
+
+  &.isFavorite {
+    background-color: $colors.orange;
+    fill: $colors.white;
+  }
+
+  +media(medium) {
+    width: 40px;
+    height: 40px;
+    padding: 10px;
+  }
+}
+
+.rating {
+  border-top: 1px solid $colors.lighter;
+  border-bottom: 1px solid $colors.lighter;
+}

@@ -3,8 +3,8 @@
 $font = {
   size: {
     base: 14px,
-    huge: 2rem,
-    large: 1.5rem,
+    huge: 1.75rem,
+    large: 1.25rem,
     medium: 1rem,
     small: .75rem,
   },
@@ -32,18 +32,29 @@ $lineHeight = 1.4;
   .text-justify { text-align: justify; }
 
   // weight
-  .text-bold { text-align: $font.weight.bold; }
-  .text-semibold { text-align: $font.weight.semibold; }
+  .text-bold { font-weight: $font.weight.bold; }
+  .text-semibold { font-weight: $font.weight.semibold; }
 
   // case transform
   .text-uppercase { text-transform: uppercase; }
   .text-lowercase { text-transform: lowercase; }
   .text-captalize { text-transform: capitalize; }
+
+  .text-truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: $colors.darkGreen;
+  margin: 0;
 }
 
 a {
   color: $colors.green;
   text-decoration: none;
+  cursor: pointer;
 
   &:hover {
     text-decoration: underline;

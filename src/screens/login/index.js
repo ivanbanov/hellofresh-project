@@ -124,7 +124,7 @@ class LoginScreen extends React.Component {
     return (
       <div className={styles.login}>
         <Helmet>
-          <title>🔑 Login</title>
+          <title>Login 🔑</title>
         </Helmet>
 
         <Col
