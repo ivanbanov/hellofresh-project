@@ -2,22 +2,24 @@
 
 import { history } from 'src/router';
 
+const TOKEN_NAME = 'hellofresh-session';
+
 function _getApiInstance(): Object {
-  return require('src/api');
+  return require('src/api').default;
 }
 
 function getToken(): string {
-  return window.localStorage.getItem('token');
+  return window.localStorage.getItem(TOKEN_NAME);
 }
 
 function authenticate(token: string): void {
-  window.localStorage.setItem('token', token);
-  _getApiInstance().defaults.headers.common.token = token;
+  window.localStorage.setItem(TOKEN_NAME, token);
+  _getApiInstance().defaults.headers.token = token;
 }
 
 function expire(): void {
-  window.localStorage.removeItem('token');
-  _getApiInstance().defaults.headers.common.token = null;
+  window.localStorage.removeItem(TOKEN_NAME);
+  _getApiInstance().defaults.headers.token = null;
 
   history.push('/login');
 }
