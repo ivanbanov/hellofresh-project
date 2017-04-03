@@ -5,6 +5,7 @@ import {
   Route,
   Redirect,
 } from 'react-router-dom';
+import session from 'src/utils/auth/session';
 
 class RestrictRoute extends React.Component {
   static displayName = 'RestrictRoute';
@@ -23,7 +24,7 @@ class RestrictRoute extends React.Component {
 
   _routeRender(props: Object): React$Element<*> {
     const { component } = this.props;
-    const isAuthenticated = window.localStorage.getItem('token');
+    const isAuthenticated = session.isAuthenticated();
 
     return isAuthenticated
       ? React.createElement(component, props)

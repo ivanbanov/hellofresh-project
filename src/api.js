@@ -1,4 +1,7 @@
+// @flow
+
 import axios from 'axios';
+import session from 'src/utils/auth/session';
 
 const api = axios.create({
   baseURL: '//localhost:3001/',
@@ -6,7 +9,7 @@ const api = axios.create({
     post: {
       'Content-Type': 'application/x-www-form-urlencoded',
     },
-    token: window.localStorage.getItem('token'),
+    token: session.getToken(),
   },
 });
 

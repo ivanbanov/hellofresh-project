@@ -140,7 +140,7 @@ class LoginScreen extends React.Component {
             size={7} gutter={{ bottom: 'large' }}
             className={styles.logo}
           >
-            <img src={imgLogo} />
+            {/*<img src={imgLogo} />*/}
           </Col>
 
           <Col className={styles.form} gutter="large">

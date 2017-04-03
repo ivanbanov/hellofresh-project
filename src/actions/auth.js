@@ -1,11 +1,8 @@
 import { ACTIONS } from 'src/constants';
-import { history } from 'src/router';
-import api from 'src/api';
+import session from 'src/utils/auth/session';
 
 export function login(user: Object, token: string): Object {
-  window.localStorage.setItem('token', token);
-
-  api.defaults.headers.common.token = token;
+  session.authenticate(token);
 
   return {
     type: ACTIONS.LOGIN,
@@ -14,10 +11,9 @@ export function login(user: Object, token: string): Object {
 }
 
 export function logout(): void {
-  window.localStorage.removeItem('token');
-  history.push('/login');
+  session.expire();
 
-  api.defaults.headers.common.token = null;
+  debugger;
 
   return { type: ACTIONS.LOGOUT };
 }

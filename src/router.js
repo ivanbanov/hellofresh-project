@@ -1,10 +1,14 @@
 // @flow
 
 import React from 'react';
-import { Route } from 'react-router-dom';
+import {
+  Route,
+  Redirect
+} from 'react-router-dom';
 import { ConnectedRouter } from 'connected-react-router';
 import RestrictRoute from 'src/utils/auth/restrict-route';
 import { createBrowserHistory } from 'history';
+import session from 'src/utils/auth/session';
 
 // Screens
 import LoginScreen from 'src/screens/login';
@@ -19,7 +23,12 @@ class AppRouter extends React.Component {
     return (
       <ConnectedRouter history={history}>
         <div>
-          <Route path="/login" component={LoginScreen} />
+          <Redirect from="/" to="/login" />
+          <Route path="/login" render={() => (
+            session.isAuthenticated()
+              ? <Redirect to="/recipes" />
+              : <LoginScreen history={history} />
+          )} />
           <RestrictRoute path="/recipes" component={RecipesScreen} />
         </div>
       </ConnectedRouter>

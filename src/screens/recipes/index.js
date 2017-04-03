@@ -30,9 +30,15 @@ class RecipesScreen extends React.Component {
   constructor(props: Object) {
     super(props);
 
+    window.xxx = api;
+
     api
       .get('/recipes')
-      .then(response => this.setState({ recipes: response.data.recipes }));
+      // .catch(e => { debugger })
+      .then(response => {
+        // debugger;
+        this.setState({ recipes: response.data.recipes })
+      });
   }
 
   _renderHeader(): React$Element<*> {
