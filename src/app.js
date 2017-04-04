@@ -2,6 +2,8 @@
 
 import React from 'react';
 import AppRouter from 'src/router';
+import { Helmet } from 'react-helmet';
+import favicon from 'src/ui/assets/images/favicon.png';
 import 'src/ui/styles/setup.styl';
 
 // Redux
@@ -13,9 +15,16 @@ class App extends React.Component {
 
   render() {
     return (
-      <Provider store={store}>
-        <AppRouter />
-      </Provider>
+      <div>
+        <Helmet>
+          <link rel="icon" type="image/x-icon" href={favicon}  />
+          <link rel="shortcut icon" type="image/x-icon" href={favicon}  />
+        </Helmet>
+
+        <Provider store={store}>
+          <AppRouter />
+        </Provider>
+      </div>
     );
   }
 }
