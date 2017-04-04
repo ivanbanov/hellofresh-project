@@ -37,7 +37,6 @@ class RestrictRoute extends React.Component {
       ...otherProps
     } = this.props;
 
-
     return (
       <Route render={this._routeRender} {...otherProps} />
     );

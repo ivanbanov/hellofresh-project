@@ -2,35 +2,65 @@
 
 import { history } from 'src/router';
 
-const TOKEN_NAME = 'hellofresh-session';
+const TOKEN_PREFIX = 'hellofresh';
+
+const STORAGE = {
+  token: `${TOKEN_PREFIX}-token`,
+  user: `${TOKEN_PREFIX}-user`,
+};
 
 function _getApiInstance(): Object {
   return require('src/api').default;
 }
 
-function getToken(): string {
-  return window.localStorage.getItem(TOKEN_NAME);
+function getData(name: string): any {
+  return window.localStorage.getItem(STORAGE[name]);
 }
 
-function authenticate(token: string): void {
-  window.localStorage.setItem(TOKEN_NAME, token);
-  _getApiInstance().defaults.headers.token = token;
+function setData(name: string, value: ?string | Object = null): void {
+  const data = typeof value === 'object'
+    ? JSON.stringify(value)
+    : value;
+
+  return window.localStorage.setItem(STORAGE[name], data);
+}
+
+function removeData(name: string): void {
+  return window.localStorage.removeItem(STORAGE[name]);
+}
+
+function authenticate(data: {
+  user: Object,
+  token: string
+}): void {
+  setData('user', data.user);
+  setData('token', data.token);
+
+  const api = _getApiInstance();
+
+  api.defaults.headers.token = data.token;
 }
 
 function expire(): void {
-  window.localStorage.removeItem(TOKEN_NAME);
-  _getApiInstance().defaults.headers.token = null;
+  removeData('token');
+  removeData('user');
+
+  const api = _getApiInstance();
+
+  api.defaults.headers.token = null;
 
   history.push('/login');
 }
 
 function isAuthenticated(): boolean {
-  return !!getToken();
+  return !!getData('token');
 }
 
 export default {
+  getData,
+  setData,
+  removeData,
   authenticate,
-  expire,
-  getToken,
   isAuthenticated,
+  expire,
 };

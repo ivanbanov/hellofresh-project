@@ -9,7 +9,7 @@ const api = axios.create({
     post: {
       'Content-Type': 'application/x-www-form-urlencoded',
     },
-    token: session.getToken(),
+    token: session.getData('token'),
   },
 });
 

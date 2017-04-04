@@ -3,7 +3,8 @@
 import React from 'react';
 import {
   Route,
-  Redirect
+  Redirect,
+  Switch,
 } from 'react-router-dom';
 import { ConnectedRouter } from 'connected-react-router';
 import RestrictRoute from 'src/utils/auth/restrict-route';
@@ -22,15 +23,15 @@ class AppRouter extends React.Component {
   render() {
     return (
       <ConnectedRouter history={history}>
-        <div>
-          <Redirect from="/" to="/login" />
+        <Switch>
+          <Redirect exact path="/" to="/login" />
           <Route path="/login" render={() => (
             session.isAuthenticated()
               ? <Redirect to="/recipes" />
               : <LoginScreen history={history} />
           )} />
           <RestrictRoute path="/recipes" component={RecipesScreen} />
-        </div>
+        </Switch>
       </ConnectedRouter>
     );
   }

@@ -140,17 +140,14 @@ class LoginScreen extends React.Component {
             size={7} gutter={{ bottom: 'large' }}
             className={styles.logo}
           >
-            {/*<img src={imgLogo} />*/}
+            <img src={imgLogo} />
           </Col>
 
           <Col className={styles.form} gutter="large">
             { this._renderForm() }
           </Col>
 
-          <Col
-            size={12} gutter={{ top: 'medium' }}
-            className="text-center"
-          >
+          <Col gutter={{ top: 'medium' }} className="text-center">
             HelloFresh ®
           </Col>
         </Col>

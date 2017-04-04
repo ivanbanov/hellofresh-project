@@ -5,7 +5,7 @@ type State = {
 };
 
 const initialState: State = {
-  user: false,
+  user: {},
 };
 
 export default function loggin(

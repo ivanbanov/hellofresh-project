@@ -2,7 +2,10 @@ import { ACTIONS } from 'src/constants';
 import session from 'src/utils/auth/session';
 
 export function login(user: Object, token: string): Object {
-  session.authenticate(token);
+  session.authenticate({
+    user,
+    token,
+  });
 
   return {
     type: ACTIONS.LOGIN,
@@ -12,8 +15,6 @@ export function login(user: Object, token: string): Object {
 
 export function logout(): void {
   session.expire();
-
-  debugger;
 
   return { type: ACTIONS.LOGOUT };
 }
