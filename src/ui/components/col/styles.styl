@@ -1,6 +1,6 @@
 $cols = 12;
 
-$gutter = {
+$gutters = {
   small: .5rem,
   medium: 1.25rem,
   large: 2rem,
@@ -21,7 +21,7 @@ for $breakpoint in $breakpoints {
 }
 
 // gutters
-for $gutter, $value in $gutter {
+for $gutter, $value in $gutters {
   .gutter-top-{ $gutter } {
     padding-top: $value;
   }
