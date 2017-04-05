@@ -177,7 +177,7 @@ class Recipe extends React.Component {
           </Col>
 
           <Col size={6} className="text-right">
-            {Number(recipe.ratings) + didSetStars ? 1 : 0} Ratings
+            {Number(recipe.ratings) + (didSetStars ? 1 : 0)} Ratings
           </Col>
         </Grid>
       </Col>
