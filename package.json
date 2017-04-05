@@ -58,6 +58,6 @@
     "build": "node ./node_modules/webpack/bin/webpack.js --config ./webpack/config.js --progress",
     "lint": "node ./node_modules/eslint/bin/eslint.js ./src -c ./.eslintrc",
     "server": "node ./server/api.js",
-    "test": "node ./node_modules/jest/bin/jest.js ./src"
+    "tests": "node ./node_modules/jest/bin/jest.js ./src"
   }
 }

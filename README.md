@@ -1,71 +1,106 @@
-HelloFresh Dev Team - Front-end Developer Test
-=============================================
+# HelloFresh - Front-end Test
 
-Hello and thanks for taking the time to try out the Front-end Developer test.
+## Concepts
 
-The goal of this test is to assert your coding, UI, HTML and CSS skills (to some degree).
+Project based on React/Redux architeture, Webpack for the tooling and Express to mock the back-end.
 
-Feel more than free to add any particular technique or algorithm at any point, which you think might enrich the overall quality of the end result. Take as much time as you want on the test, please do over-engineer we would like to assess all your skills!
+## Try it out
+1. Clone this project
+```
+git@github.com:hellofreshdevtests/ivanbanov-frontend-test.git
+```
 
-Instructions
-------------
+2. Install all dependencies
+```
+npm install
+```
 
-1. Clone this repo.
-2. Create a new `dev` branch, or create a fork of this repo.
-3. Write your code, in various commits so we can see your development timeline. We won't be looking at the time each task took you. We're much more interested in your train of thought!
-4. When finished, create a Pull Request with set-up instructions and an explanation for your solution.
-5. Reply to the thread your having with our HR department telling us that we may start reviewing your code.
+3. Run the back-end mock server
+```
+npm run server
+```
 
-Requirements
-------------
+4. Run the dev server
+```
+npm start
+```
 
-- You *MUST* use HTML5, CSS3 and a JS framework or Vanilla JS
-- Your code *MUST* be in english (variable names, comments etc..)
-- You *MAY* comment your code wherever you feel necessary
-- You *SHOULD NOT* use jQuery or Twitter's Bootstrap
-- You *SHOULD* use a CSS preprocessor or postprocessor
-- You *SHOULD* use some kind of server to serve your code, something like [http-server](https://github.com/indexzero/http-server) would do
-- You *MUST* automate all the compilation processes with a task running utility (eg. Gulp) preferred is a self-written solution
+Then access [http://localhost:3000/](http://localhost:3000/)
 
-Exercise
---------
 
-In this test we will build a recipe review area.
+## Routes
 
-It will contain two pages:
+- `/login` - Authentication screen
+- `/recipes` - List of recipes
 
-- [Login page](#login-page)
-- [Recipe review page](#recipe-review-page)
+### Authentication
+To access the restrict area use the user
+```
+email: user@hellofresh.com
+password: 123
+```
 
-#### Login page
+##  Features
+### UX
+- Full login authentication with fields validation
+- Restrict access to authenticated routes
+- Responsive and mobile first
+- Rating is only available in the details modal to avoid user give stars without enough knowledge about the recipe
 
-Implement a login page with a form to login, it doesn't have to actually log you in or do any checks, but things like e-mail validation are appreciated!
+### Dev
+- It's a React SPA ❤
+- React Helmet for title, favivon and meta tags
+- Redux to control the state of the application
+- Axios for data fetching
+- UI components configs synced with the style files
+- Components for Grid, Col with semantic gutters
+- SVG sprite icons
+- Project full linted with eslint
+- Flowtype FTW
+- Webpack to control all the tooling
 
-#### Recipe review page
+## Tooling
 
-This will show all the recipes that are attached.
+All the tooling is developed with Webpack, it will automate all the process of bundling and generate a static `index.html` with the bundle and styles injected.
 
-- All the recipes will be displayed here
-- The recipes have to be shown with all the data in the JSON displayed in a user-friendly way
-- Each recipe can be favorited or unfavorited
-- Each recipe can be rated
+It's configured to run a dev server with HMR and compile all the project.
 
-Evaluation Criteria
--------------------
+### What is configure for
+- **Styles:** CSSModules, Stylus and PostCss for prefixes
+- **Scripts:** Parse all ES6, import of image files and use `./src` as path for global modules import
 
-IMPORTANT: You don't need to build any kind of backend for this exercise. No need to store data in any database. It's perfectly fine to approach this as a refined front-end prototype. That being said, if you do want to take the time to build a backend for it your efforts will be taken into account.
+## Tests
+All the tests are available in the `__tests__` around the project. There is unit tests for the validators and snapshot tests for the components.
 
-- The app must run
-- Your app is lean and mean (small files that make the page look good)
-- You implemented a proper grid
-- Your app is responsive
-- Your app is well structured
+To run the tests use:
+```
+npm run tests
+```
 
-Bonus points
+## Tasks
+Compile and start the server on `http://localhost:3000/`
 
-- You wrote unit tests for your JavaScript
-- Your application is a SPA
-- You wrote server side code instead of using a utility application like `http-server`
-- You implement actual endpoints for the requests to the server
+```
+npm start
+```
 
-Good luck, and have fun!
+Just build to the dist directory
+```
+npm run build
+```
+
+Start back-end server
+```
+npm run server
+```
+
+Run the ESLint
+```
+npm run lint
+```
+
+Run tests
+
+```
+npm run tests
+```
