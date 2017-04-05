@@ -82,7 +82,7 @@ class Input extends React.Component {
       placeholder,
       value,
       name,
-      ...otherProps,
+      ...otherProps
     } = this.props;
 
     const { isValid } = this.state;

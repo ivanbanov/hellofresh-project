@@ -10,7 +10,7 @@ const STORAGE = {
 };
 
 function _getApiInstance(): Object {
-  return require('src/api').default;
+  return require('src/api').default; // eslint-disable-line
 }
 
 function getData(name: string): any {

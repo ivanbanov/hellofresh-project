@@ -17,8 +17,8 @@ class App extends React.Component {
     return (
       <div>
         <Helmet>
-          <link rel="icon" type="image/x-icon" href={favicon}  />
-          <link rel="shortcut icon" type="image/x-icon" href={favicon}  />
+          <link rel="icon" type="image/x-icon" href={favicon} />
+          <link rel="shortcut icon" type="image/x-icon" href={favicon} />
         </Helmet>
 
         <Provider store={store}>

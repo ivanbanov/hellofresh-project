@@ -1,6 +1,6 @@
 // @flow
 
-import React, { PropTypes } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import bindAll from 'lodash/bindAll';
