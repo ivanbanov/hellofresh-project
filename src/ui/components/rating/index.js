@@ -17,11 +17,13 @@ class Rating extends React.Component {
   static propTypes = {
     rating: PropTypes.number,
     onClick: PropTypes.func,
+    readonly: PropTypes.bool,
   };
 
   static defaultProps = {
     rating: 0,
     onClick: () => null,
+    readonly: false,
   };
 
   state: State = {
@@ -37,14 +39,24 @@ class Rating extends React.Component {
   }
 
   _onClick(value: number): void {
-    const { onClick } = this.props;
+    const {
+      onClick,
+      readonly,
+    } = this.props;
+
+    if (readonly) {
+      return;
+    }
 
     this.setState({ userRating: value });
     onClick(value);
   }
 
   render() {
-    const { rating } = this.props;
+    const {
+      readonly,
+      rating,
+    } = this.props;
     const { userRating } = this.state;
 
     const ratingValue = userRating || (rating === null ? 0 : Math.floor(rating));
@@ -59,7 +71,7 @@ class Rating extends React.Component {
           onClick={() => this._onClick(value)}
           className={classNames(
             styles.iconStar,
-            { [styles.isActive]: isActive }
+            { [styles.isActive]: isActive },
           )}
         >
           <Icon name="star" />
@@ -68,7 +80,10 @@ class Rating extends React.Component {
     });
 
     return (
-      <div className={styles.rating}>
+      <div className={classNames(
+        styles.rating,
+        { [styles.isReadonly]: readonly },
+      )}>
         {stars}
       </div>
     );

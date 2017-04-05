@@ -33,6 +33,8 @@ class Col extends React.Component {
       size,
       children,
       className,
+      style,
+      ...otherProps
     } = this.props;
 
     let gutterConfig: Object;
@@ -77,11 +79,11 @@ class Col extends React.Component {
       ...sizeConfig,
 
       // other classes
-      className
+      className,
     );
 
     return (
-      <div className={classes}>
+      <div className={classes} style={style} {...otherProps}>
         {children}
       </div>
     );

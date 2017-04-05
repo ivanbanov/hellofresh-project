@@ -2,16 +2,20 @@
   display: flex;
   font-size: 1.5em;
   line-height: 1;
-}
-
-.iconStar {
-  fill: $colors.medium;
-  flex: 1;
-  text-align: center;
 
   svg {
     cursor: pointer;
   }
+
+  &.isReadonly svg {
+    cursor: default;
+  }
+}
+
+.iconStar {
+  fill: $colors.light;
+  flex: 1;
+  text-align: center;
 
   &.isActive {
     fill: $colors.orange;

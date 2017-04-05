@@ -82,6 +82,7 @@ class Input extends React.Component {
       placeholder,
       value,
       name,
+      ...otherProps,
     } = this.props;
 
     const { isValid } = this.state;
@@ -96,6 +97,7 @@ class Input extends React.Component {
           className={styles.input}
           onBlur={event => this._validation(event.target.value)}
           onChange={this._onChange}
+          {...otherProps}
         />
 
         {

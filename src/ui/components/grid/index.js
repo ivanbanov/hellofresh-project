@@ -9,6 +9,7 @@ class Grid extends React.Component {
 
   static propTypes = {
     fluid: PropTypes.bool,
+    className: PropTypes.string,
   };
 
   static defaultProps = {
@@ -19,10 +20,12 @@ class Grid extends React.Component {
     const {
       fluid,
       children,
+      className,
+      ...otherProps
     } = this.props;
 
     return (
-      <div className={classNames(styles.grid, { fluid })}>
+      <div className={classNames(styles.grid, { fluid }, className)} {...otherProps}>
         {children}
       </div>
     );
