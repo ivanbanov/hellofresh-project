@@ -13,10 +13,12 @@ import {
 } from 'connected-react-router';
 import { history } from 'src/router';
 import authReducer from 'src/reducers/auth';
+import recipesReducer from 'src/reducers/recipes';
 import session from 'src/utils/auth/session';
 
 const reducers = combineReducers({
   authReducer,
+  recipesReducer,
 });
 
 export default createStore(

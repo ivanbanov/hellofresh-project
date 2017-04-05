@@ -1,75 +1,341 @@
 // @flow
 
 import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
+import axios from 'axios';
+import bindAll from 'lodash/bindAll';
+import get from 'lodash/get';
+import Grid from 'src/ui/components/grid';
 import Col from 'src/ui/components/col';
 import Icon from 'src/ui/components/icon';
 import Rating from 'src/ui/components/rating';
+import {
+  setFavorite,
+  setRating,
+} from 'src/actions/recipes';
 import classNames from 'classnames';
 import styles from './styles.styl';
 
+const EMPTY_VALUE = '--';
+
+const DIFFICULTY_MAPPER = [
+  'Easy',
+  'Medium',
+  'Hard',
+];
+
 type State = {
-  isFavorite: boolean,
+  country: string,
 };
 
 class Recipe extends React.Component {
   static displayName = 'Recipe';
 
   static propTypes = {
+    dispatch: PropTypes.func.isRequired,
     recipe: PropTypes.object.isRequired,
-  }
+    recipes: PropTypes.object,
+    showDetail: PropTypes.bool,
+    onClick: PropTypes.func,
+  };
+
+  static defaultProps = {
+    showDetail: false,
+  };
 
   state: State = {
-    isFavorite: false,
+    country: '',
   };
 
   _setFavorite: Function;
+  _setRating: Function;
+  _onClick: Function;
 
   constructor(props: Object) {
     super(props);
 
-    this._setFavorite = this._setFavorite.bind(this);
+    bindAll(this, [
+      '_setFavorite',
+      '_setRating',
+      '_onClick',
+    ]);
   }
 
-  _setFavorite(event: Object): void {
+  componentDidMount() {
+    const { recipe } = this.props;
+    const latlng: Array<string> = recipe.user.latlng.split(', ');
+
+    axios({
+      method: 'get',
+      url: `//ws.geonames.org/countryCodeJSON?lat=${latlng[0]}&lng=${latlng[1]}&username=demo`,
+    }).then((response) => {
+      this.setState({ country: response.data.countryName });
+    });
+  }
+
+  _setFavorite(): void {
+    const {
+      recipe,
+      dispatch,
+    } = this.props;
+
+    dispatch(setFavorite(recipe.id));
+  }
+
+  _setRating(value: number): void {
+    const {
+      recipe,
+      dispatch,
+    } = this.props;
+
+    dispatch(setRating(recipe.id, value));
+  }
+
+  _onClick(event: Object): void {
     event.preventDefault();
 
-    const { isFavorite } = this.state;
+    const {
+      onClick,
+      showDetail,
+    } = this.props;
 
-    this.setState({ isFavorite: !isFavorite });
+    if (!showDetail) {
+      onClick();
+    }
+  }
 
-    // api.post here!
+  _renderFavorite() {
+    const {
+      recipe,
+      recipes,
+    } = this.props;
+
+    const isFavorite = get(recipes, `${recipe.id}.isFavorite`, false);
+
+    return (
+      <a href="#" onClick={(event) => {
+        event.preventDefault();
+        this._setFavorite();
+      }}>
+        <Icon
+          name="star"
+          className={classNames(
+            styles.favoriteIcon,
+            { [styles.isFavorite]: isFavorite }
+          )}
+        />
+      </a>
+    );
+  }
+
+  _renderTitle() {
+    const {
+      showDetail,
+      recipe,
+    } = this.props;
+
+    return (
+      <Col gutter={{ bottom: 'medium' }}>
+        <span
+          className={classNames(
+            'text-large text-semibold',
+            { [styles.clickable]: !showDetail },
+          )}
+          onClick={this._onClick}
+        >
+          {recipe.name}
+        </span>
+
+        {
+          showDetail &&
+          <span>&nbsp;{recipe.headline}</span>
+        }
+      </Col>
+    );
+  }
+
+  _renderRating() {
+    const {
+      recipe,
+      recipes,
+      showDetail,
+    } = this.props;
+
+    const reducerRecipe: Object = get(recipes, recipe.id, {});
+    const rating: number = reducerRecipe.rating || recipe.rating;
+    const didSetStars: boolean = reducerRecipe.didSetStars || false;
+
+    return (
+      <Col gutter={{ top: 'small', bottom: 'small' }} className={styles.rating}>
+        <Grid className={styles.ratingGrid}>
+          <Col size={6}>
+            <Rating
+              rating={rating}
+              readonly={!showDetail}
+              onClick={this._setRating}
+            />
+          </Col>
+
+          <Col size={6} className="text-right">
+            {Number(recipe.ratings) + didSetStars ? 1 : 0} Ratings
+          </Col>
+        </Grid>
+      </Col>
+    );
+  }
+
+  _renderDetails() {
+    const { showDetail } = this.props;
+
+    return (
+      <Col gutter="medium">
+        {this._renderTitle()}
+        {this._renderRating()}
+
+        <Col gutter={{ top: 'medium' }}>
+          {
+            showDetail
+              ? this._renderFullDetail()
+              : this._renderShortDetail()
+          }
+        </Col>
+      </Col>
+    );
+  }
+
+  _renderShortDetail() {
+    const { recipe } = this.props;
+
+    return (
+      <div>
+        <span>{(recipe.description || '').slice(0, 150).concat('... ')}</span>
+        <a href="#" className="text-semibold" onClick={this._onClick}>
+          more details
+        </a>
+      </div>
+    );
+  }
+
+  _renderFullDetail() {
+    const { recipe } = this.props;
+    const Title: Function = (title, icon) => (
+      <Col gutter={{ bottom: 'small' }} className="text-semibold">
+        {icon && <span><Icon name={icon} className="text-huge" />&nbsp;</span>}
+        {title}
+      </Col>
+    );
+
+    const { country } = this.state;
+
+    return (
+      <div>
+        <Col gutter={{ bottom: 'small' }} size={12} className={styles.description}>
+          {recipe.description}
+        </Col>
+
+        <Col gutter={{ top: 'medium' }}>
+          <Grid>
+            <Col size={{ small: 12, large: 6 }}>
+              <Col className={styles.fullDetailSection}>
+                {Title('Ingredients', 'box')}
+                <ul>
+                  {recipe.ingredients.map((item, i) => (
+                    <li key={i}>{item}</li>
+                  ))}
+                </ul>
+              </Col>
+
+              <Col className={styles.fullDetailSection}>
+                {Title('Sent by', 'user')}
+                <div>
+                  <strong>Name:</strong>&nbsp;{recipe.user.name || EMPTY_VALUE}
+                </div>
+
+                <div>
+                  <strong>Email:</strong>&nbsp;{recipe.user.email || EMPTY_VALUE}
+                </div>
+
+                <div>
+                  <strong>Location:</strong>&nbsp;{country || EMPTY_VALUE}
+                </div>
+              </Col>
+            </Col>
+
+            <Col size={{ small: 12, large: 6 }}>
+              <Col className={styles.fullDetailSection}>
+                {Title('Nutritional infos', 'leaf')}
+                <div>
+                  <strong>Calories:</strong>&nbsp;{recipe.calories || EMPTY_VALUE}
+                </div>
+
+                <div>
+                  <strong>Proteins:</strong>&nbsp;{recipe.proteins || EMPTY_VALUE}
+                </div>
+
+                <div>
+                  <strong>Carbos:</strong>&nbsp;{recipe.carbos || EMPTY_VALUE}
+                </div>
+
+                <div>
+                  <strong>Fats:</strong>&nbsp;{recipe.fats || EMPTY_VALUE}
+                </div>
+
+                <div>
+                  <strong>Fibers:</strong>&nbsp;{recipe.fibers || EMPTY_VALUE}
+                </div>
+              </Col>
+
+              <Col className={styles.fullDetailSection}>
+                {Title('Time', 'cloack')}
+                <span>{Number(recipe.time.match(/\d+/))} minutes</span>
+              </Col>
+
+              <Col className={styles.fullDetailSection}>
+                {Title('Difficulty', 'dificulty')}
+                <span>{DIFFICULTY_MAPPER[Number(recipe.difficulty)]}</span>
+              </Col>
+            </Col>
+          </Grid>
+        </Col>
+      </div>
+    );
   }
 
   render() {
-    const { recipe } = this.props;
-    const { isFavorite } = this.state;
+    const {
+      recipe,
+      showDetail,
+    } = this.props;
 
     return (
-      <div className={styles.recipe}>
-        <a href="#" onClick={this._setFavorite}>
-          <Icon
-            name="star"
-            className={classNames(styles.favoriteIcon, { [styles.isFavorite]: isFavorite })} />
-        </a>
+      <div className={classNames(styles.recipe)}>
+        {this._renderFavorite()}
 
-        <img src={recipe.thumb} className={styles.thumb} />
-
-        <Col gutter="medium">
-          <Col gutter={{ bottom: 'medium' }} className="text-large text-semibold">
-            {recipe.name}
-          </Col>
-
-          <Col gutter={{ top: 'small', bottom: 'small' }} className={styles.rating}>
-            <Rating rating={recipe.rating} /> {/* onClick api.post */}
-          </Col>
-
-          <Col gutter={{ top: 'medium' }}>
-            {recipe.description.slice(0, 150).concat('...')}
-          </Col>
+        <Col gutter={{
+          top: 'small',
+          left: 'small',
+          right: 'small',
+        }}>
+          <img
+            src={recipe.image}
+            alt={recipe.name}
+            onClick={this._onClick}
+            className={classNames(
+              styles.image,
+              { [styles.clickable]: !showDetail },
+            )}
+          />
         </Col>
+
+        {this._renderDetails()}
       </div>
     );
   }
 }
 
-export default Recipe;
+
+function mapStateToProps(state: Object): Object {
+  return { recipes: state.recipesReducer };
+}
+
+export default connect(mapStateToProps)(Recipe);
