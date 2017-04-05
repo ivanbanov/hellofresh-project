@@ -63,13 +63,12 @@ class Recipe extends React.Component {
 
   componentDidMount() {
     const { recipe } = this.props;
-    const latlng: Array<string> = recipe.user.latlng.split(', ');
 
     axios({
       method: 'get',
-      url: `//ws.geonames.org/countryCodeJSON?lat=${latlng[0]}&lng=${latlng[1]}&username=demo`,
+      url: `https://maps.googleapis.com/maps/api/geocode/json?latlng=${recipe.user.latlng}`,
     }).then((response) => {
-      this.setState({ country: response.data.countryName });
+      this.setState({ country: response.data.results[1].address_components[1].long_name });
     });
   }
 
