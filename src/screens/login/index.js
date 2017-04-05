@@ -3,6 +3,7 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
+import Footer from 'src/screens/components/footer';
 import Col from 'src/ui/components/col';
 import Input from 'src/ui/components/input';
 import Button from 'src/ui/components/button';
@@ -91,6 +92,7 @@ class LoginScreen extends React.Component {
               placeholder="user@hellofresh.com"
               validation={isEmail}
               required
+              autoFocus
             />
           </Col>
         </Col>
@@ -147,9 +149,7 @@ class LoginScreen extends React.Component {
             { this._renderForm() }
           </Col>
 
-          <Col gutter={{ top: 'medium' }} className="text-center">
-            HelloFresh ®
-          </Col>
+          <Footer />
         </Col>
       </div>
     );
