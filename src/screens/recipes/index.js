@@ -54,19 +54,18 @@ class RecipesScreen extends React.Component {
     window.removeEventListener('keyup', this._hideRecipeDetail);
   }
 
-  _showRecipeDetail(event: ?Object): void {
-    if (typeof event === 'object') {
-      window.addEventListener('keyup', this._hideRecipeDetail);
-    }
+  _showRecipeDetail(): void {
+    window.addEventListener('keyup', this._hideRecipeDetail);
 
-    if (event == null) {
-      this.setState({ showRecipeDetail: true });
-    }
+    this.setState({ showRecipeDetail: true });
   }
 
-  _hideRecipeDetail(): void {
+  _hideRecipeDetail(event: Object): void {
+    if ((typeof event === 'object' && event.keyCode === 27) || (event.type === 'click')) {
+      this.setState({ showRecipeDetail: false });
+    }
+
     window.removeEventListener('keyup', this._hideRecipeDetail);
-    this.setState({ showRecipeDetail: false });
   }
 
   _renderRecipes(): React$Element<*> {
