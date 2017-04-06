@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Grid should render properly 1`] = `
+<svg
+  className="bar"
+>
+  <use
+    xlinkHref="[object Object]#foo"
+  />
+</svg>
+`;

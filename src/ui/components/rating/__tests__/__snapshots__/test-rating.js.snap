@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Button should render properly 1`] = `
+<div
+  className="undefined"
+>
+  <div
+    className="undefined"
+    onClick={[Function]}
+  >
+    <div>
+      Icon
+    </div>
+  </div>
+  <div
+    className="undefined"
+    onClick={[Function]}
+  >
+    <div>
+      Icon
+    </div>
+  </div>
+  <div
+    className="undefined"
+    onClick={[Function]}
+  >
+    <div>
+      Icon
+    </div>
+  </div>
+  <div
+    className="undefined"
+    onClick={[Function]}
+  >
+    <div>
+      Icon
+    </div>
+  </div>
+  <div
+    className="undefined"
+    onClick={[Function]}
+  >
+    <div>
+      Icon
+    </div>
+  </div>
+</div>
+`;

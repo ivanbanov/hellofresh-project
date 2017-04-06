@@ -57,6 +57,10 @@ class Input extends React.Component {
       this.validations.push(validation);
     }
 
+    if (Array.isArray(validation)) {
+      this.validations = validation;
+    }
+
     this._validation = this._validation.bind(this);
     this._onChange = this._onChange.bind(this);
   }
@@ -82,6 +86,7 @@ class Input extends React.Component {
       placeholder,
       value,
       name,
+      validation,
       ...otherProps
     } = this.props;
 
@@ -96,7 +101,7 @@ class Input extends React.Component {
           name={name}
           className={styles.input}
           onBlur={event => this._validation(event.target.value)}
-          onChange={this._onChange}
+          onKeyPress={this._onChange}
           {...otherProps}
         />
 

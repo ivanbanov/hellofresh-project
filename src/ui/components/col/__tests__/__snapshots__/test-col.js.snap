@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Col should render properly 1`] = `
+<div
+  className="undefined undefined undefined undefined undefined col-foo-bar"
+  style={
+    Object {
+      "backgroundColor": "red",
+    }
+  }
+>
+  <div>
+    Col
+  </div>
+</div>
+`;
+
+exports[`Col should render properly 2`] = `
+<div
+  className="undefined"
+  style={undefined}
+/>
+`;

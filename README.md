@@ -41,7 +41,7 @@ password: 123
 ```
 
 ##  Features
-### UX
+### User
 - Full login authentication with fields validation
 - Restrict access to authenticated routes
 - Responsive and mobile first
@@ -53,11 +53,14 @@ password: 123
 - Redux to control the state of the application
 - Axios for data fetching
 - UI components configs synced with the style files
+- All UI components are tested with Jest/Enzyme
+- Unit test for validators
 - Components for Grid, Col with semantic gutters
 - SVG sprite icons
 - Project full linted with eslint
 - Flowtype FTW
 - Webpack to control all the tooling
+- Restrict API endpoints are authenticated by token
 
 ## Tooling
 
@@ -70,7 +73,7 @@ It's configured to run a dev server with HMR and compile all the project.
 - **Scripts:** Parse all ES6, import of image files and use `./src` as path for global modules import
 
 ## Tests
-All the tests are available in the `__tests__` around the project. There is unit tests for the validators and snapshot tests for the components.
+All the tests are available in the `__tests__` folders around the project. There is unit tests for the validators and snapshot tests for the components.
 
 To run the tests use:
 ```
@@ -104,3 +107,7 @@ Run tests
 ```
 npm run tests
 ```
+
+## What is NOT include
+
+- Any type of production configuration (uglify, css min, ...)

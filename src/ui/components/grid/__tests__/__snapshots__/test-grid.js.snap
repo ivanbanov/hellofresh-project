@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Grid should render properly 1`] = `
+<div
+  className=""
+>
+  <div>
+    Grid
+  </div>
+</div>
+`;
+
+exports[`Grid should render properly 2`] = `
+<div
+  className="fluid"
+>
+  <div>
+    Grid
+  </div>
+</div>
+`;

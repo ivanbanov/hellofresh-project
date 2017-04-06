@@ -1,5 +1,3 @@
-// @flow
-
 import isEmail from '../is-email';
 
 describe('validators/is-email', () => {
