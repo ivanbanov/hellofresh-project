@@ -7,7 +7,7 @@ Project based on React/Redux architeture, Webpack for the tooling and Express to
 ## Try it out
 1. Clone this project
 ```
-git@github.com:hellofreshdevtests/ivanbanov-frontend-test.git
+git clone git@github.com:hellofreshdevtests/ivanbanov-frontend-test.git
 ```
 
 2. Install all dependencies
@@ -49,7 +49,8 @@ password: 123
 
 ### Dev
 - It's a React SPA ❤
-- React Helmet for title, favivon and meta tags
+- React Helmet for title, favicon and meta tags
+- React Router for routing
 - Redux to control the state of the application
 - Axios for data fetching
 - UI components configs synced with the style files
@@ -68,7 +69,7 @@ All the tooling is developed with Webpack, it will automate all the process of b
 
 It's configured to run a dev server with HMR and compile all the project.
 
-### What is configure for
+### What is configured for
 - **Styles:** CSSModules, Stylus and PostCss for prefixes
 - **Scripts:** Parse all ES6, import of image files and use `./src` as path for global modules import
 
