@@ -1,6 +1,4 @@
-# HelloFresh - Front-end Test
-
-## Concepts
+# HelloFresh Project
 
 Project based on React/Redux architeture, Webpack for the tooling and Express to mock the back-end.
 
