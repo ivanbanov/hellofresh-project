@@ -5,7 +5,7 @@ Project based on React/Redux architeture, Webpack for the tooling and Express to
 ## Try it out
 1. Clone this project
 ```
-git clone git@github.com:hellofreshdevtests/ivanbanov-frontend-test.git
+git clone git@github.com:ivanbanov/hellofresh-project.git
 ```
 
 2. Install all dependencies
