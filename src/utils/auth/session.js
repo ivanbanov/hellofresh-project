@@ -15,16 +15,16 @@ function getData(name: string): any {
   return window.localStorage.getItem(STORAGE[name]);
 }
 
-function setData(name: string, value: ?string | Object = null): void {
-  const data = typeof value === 'object'
+function setData(name: string, value: ?string | ?Object = null): void {
+  const data: mixed = (typeof value === 'object')
     ? JSON.stringify(value)
     : value;
 
-  return window.localStorage.setItem(STORAGE[name], data);
+  window.localStorage.setItem(STORAGE[name], data);
 }
 
 function removeData(name: string): void {
-  return window.localStorage.removeItem(STORAGE[name]);
+  window.localStorage.removeItem(STORAGE[name]);
 }
 
 function authenticate(data: {
@@ -34,7 +34,7 @@ function authenticate(data: {
   setData('user', data.user);
   setData('token', data.token);
 
-  const api = _getApiInstance();
+  const api: Object = _getApiInstance();
 
   api.defaults.headers.token = data.token;
 }
@@ -43,7 +43,7 @@ function expire(): void {
   removeData('token');
   removeData('user');
 
-  const api = _getApiInstance();
+  const api: Object = _getApiInstance();
 
   api.defaults.headers.token = null;
 }

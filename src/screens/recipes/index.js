@@ -145,8 +145,4 @@ class RecipesScreen extends React.Component {
   }
 }
 
-function mapStateToProps(state: Object): Object {
-  return { user: state.authReducer.user };
-}
-
-export default connect(mapStateToProps)(RecipesScreen);
+export default connect()(RecipesScreen);

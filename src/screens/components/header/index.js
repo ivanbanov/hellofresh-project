@@ -1,24 +1,25 @@
 // @flow
 
 import React, { PropTypes } from 'react';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Container from 'src/ui/components/container';
 import Col from 'src/ui/components/col';
 import imgLogo from 'src/ui/assets/images/hellofresh-logo.svg';
-import { logout } from 'src/actions/auth';
+import { logout as logoutAction } from 'src/actions/auth';
 import styles from './styles.styl';
 
 class Header extends React.Component {
   static displayName = 'Header';
 
   static propTypes = {
-    dispatch: PropTypes.func.isRequired,
+    logoutAction: PropTypes.func.isRequired,
     user: PropTypes.object.isRequired,
   }
 
   render() {
     const {
-      dispatch,
+      logoutAction: logout,
       user,
     } = this.props;
 
@@ -33,7 +34,7 @@ class Header extends React.Component {
               <span>
                 (<a
                   className="text-uppercase text-small"
-                  onClick={() => (dispatch(logout()))}>
+                  onClick={logout}>
                   Logout
                 </a>)
               </span>
@@ -49,4 +50,8 @@ function mapStateToProps(state: Object): Object {
   return { user: state.authReducer.user };
 }
 
-export default connect(mapStateToProps)(Header);
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ logoutAction }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

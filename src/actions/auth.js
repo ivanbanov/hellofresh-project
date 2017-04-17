@@ -3,14 +3,14 @@ import { history } from 'src/router';
 import api from 'src/api';
 import session from 'src/utils/auth/session';
 
-function loginSuccess(user) {
+function loginSuccess(user: Object): Object {
   return {
     type: ACTIONS.LOGIN_SUCCESS,
     payload: { user },
   };
 }
 
-function loginFail(error) {
+function loginFail(error: string): Object {
   return {
     type: ACTIONS.LOGIN_FAIL,
     payload: { error },
@@ -24,17 +24,17 @@ export function login(
   },
   success: Function = () => null,
   error: Function = () => null,
-): Object {
+): Promise {
   const {
     email,
     password,
   } = userData;
 
-  return async (dispatch) => {
+  return async (dispatch: Function) => {
     dispatch({ type: ACTIONS.LOGIN });
 
     try {
-      const response = await api.post('/login', { email, password });
+      const response: Object = await api.post('/login', { email, password });
       const { token, user } = response.data;
 
       session.authenticate({
@@ -53,7 +53,7 @@ export function login(
   };
 }
 
-export function logout(): void {
+export function logout(): Object {
   session.expire();
   history.push('/login');
 
