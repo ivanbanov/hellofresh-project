@@ -1,7 +1,5 @@
 // @flow
 
-import { history } from 'src/router';
-
 const TOKEN_PREFIX = 'hellofresh';
 
 const STORAGE = {
@@ -48,8 +46,6 @@ function expire(): void {
   const api = _getApiInstance();
 
   api.defaults.headers.token = null;
-
-  history.push('/login');
 }
 
 function isAuthenticated(): boolean {
