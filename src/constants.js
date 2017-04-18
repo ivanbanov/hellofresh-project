@@ -3,6 +3,7 @@ const actions: Array<string> = [
   'LOGIN_FAIL',
   'LOGIN_SUCCESS',
   'LOGOUT',
+  'FETCH_RECIPES',
   'SET_FAVORITE',
   'SET_RATING',
 ];

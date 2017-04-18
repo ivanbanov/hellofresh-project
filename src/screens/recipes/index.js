@@ -1,6 +1,7 @@
 // @flow
 
 import React from 'react';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import bindAll from 'lodash/bindAll';
@@ -8,9 +9,9 @@ import Header from 'src/screens/components/header';
 import Col from 'src/ui/components/col';
 import Container from 'src/ui/components/container';
 import Grid from 'src/ui/components/grid';
-import api from 'src/api';
 import classNames from 'classnames';
 import Recipe from './components/recipe';
+import { getRecipes as getRecipesAction } from 'src/actions/recipes';
 import styles from './styles.styl';
 
 type State = {
@@ -44,10 +45,11 @@ class RecipesScreen extends React.Component {
     ]);
   }
 
-  componentDidMount() {
-    api
-      .get('/recipes')
-      .then(response => this.setState({ recipes: response.data.recipes }));
+  async componentDidMount() {
+    const { getRecipesAction: getRecipes } = this.props;
+    const response = await getRecipes();
+
+    this.setState({ recipes: response.data.recipes });
   }
 
   componentWillUnmount() {
@@ -145,4 +147,8 @@ class RecipesScreen extends React.Component {
   }
 }
 
-export default connect()(RecipesScreen);
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ getRecipesAction }, dispatch);
+}
+
+export default connect(() => ({}), mapDispatchToProps)(RecipesScreen);
