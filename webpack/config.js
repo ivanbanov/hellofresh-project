@@ -65,39 +65,39 @@ module.exports = {
       },
       {
         test: /\.(css|styl)$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: [
-            {
-              loader: 'css-loader',
-              options: {
-                sourceMap: true,
-                modules: true,
-                localIdentName: '[local]__[hash:base64:3]',
-              },
+        use: [
+          {
+            loader: 'style-loader',
+          },
+          {
+            loader: 'css-loader',
+            options: {
+              sourceMap: true,
+              modules: true,
+              localIdentName: '[local]__[hash:base64:3]',
             },
-            {
-              loader: 'postcss-loader',
-              options: {
-                plugins: [
-                  require('autoprefixer'),
-                ],
-              },
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              plugins: [
+                require('autoprefixer'),
+              ],
             },
-            {
-              loader: 'stylus-loader',
-              options: {
-                'include css': true,
-                preferPathResolver: 'webpack',
-                import: ['~styles/setup'],
-                paths: [
-                  `${PATHS.src}/ui`,
-                  `${PATHS.src}/screens`,
-                ],
-              },
+          },
+          {
+            loader: 'stylus-loader',
+            options: {
+              'include css': true,
+              preferPathResolver: 'webpack',
+              import: ['~styles/setup'],
+              paths: [
+                `${PATHS.src}/ui`,
+                `${PATHS.src}/screens`,
+              ],
             },
-          ],
-        }),
+          },
+        ],
       },
     ],
   },
@@ -106,7 +106,7 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NamedModulesPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
-    new ExtractTextPlugin('styles.css'),
+    // new ExtractTextPlugin('styles.css'),
     new HtmlWebpackPlugin({
       template: `${PATHS.src}/index.html`,
     }),
