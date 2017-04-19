@@ -23,11 +23,11 @@ class RestrictRoute extends React.Component {
   }
 
   _routeRender(props: Object): React$Element<*> {
-    const { component } = this.props;
+    const { component: Component } = this.props;
     const isAuthenticated = session.isAuthenticated();
 
     return isAuthenticated
-      ? React.createElement(component, props)
+      ? <Component {...props} />
       : <Redirect to={{ pathname: '/login' }} />;
   }
 
