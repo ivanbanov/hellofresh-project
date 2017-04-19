@@ -1,17 +1,17 @@
 // @flow
 
 import React, { PropTypes } from 'react';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import bindAll from 'lodash/bindAll';
-import get from 'lodash/get';
 import Grid from 'src/ui/components/grid';
 import Col from 'src/ui/components/col';
 import Icon from 'src/ui/components/icon';
 import Rating from 'src/ui/components/rating';
 import {
-  setFavorite,
-  setRating,
+  setFavorite as setFavoriteAction,
+  setRating as setRatingAction,
 } from 'src/actions/recipes';
 import classNames from 'classnames';
 import styles from './styles.styl';
@@ -32,15 +32,17 @@ class Recipe extends React.Component {
   static displayName = 'Recipe';
 
   static propTypes = {
-    dispatch: PropTypes.func.isRequired,
     recipe: PropTypes.object.isRequired,
-    recipes: PropTypes.object,
     showDetail: PropTypes.bool,
     onClick: PropTypes.func,
+    setFavoriteAction: PropTypes.func.isRequired,
+    setRatingAction: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
     showDetail: false,
+    setFavoriteAction: () => null,
+    setRatingAction: () => null,
   };
 
   state: State = {
@@ -75,19 +77,19 @@ class Recipe extends React.Component {
   _setFavorite(): void {
     const {
       recipe,
-      dispatch,
+      setFavoriteAction: setFavorite,
     } = this.props;
 
-    dispatch(setFavorite(recipe.id));
+    setFavorite(recipe.id);
   }
 
   _setRating(value: number): void {
     const {
       recipe,
-      dispatch,
+      setRatingAction: setRating,
     } = this.props;
 
-    dispatch(setRating(recipe.id, value));
+    setRating(recipe.id, value);
   }
 
   _onClick(event: Object): void {
@@ -106,10 +108,10 @@ class Recipe extends React.Component {
   _renderFavorite() {
     const {
       recipe,
-      recipes,
+      favorites,
     } = this.props;
 
-    const isFavorite = get(recipes, `${recipe.id}.isFavorite`, false);
+    const isFavorite: boolean = Boolean(favorites[recipe.id]);
 
     return (
       <a href="#" onClick={(event) => {
@@ -156,13 +158,11 @@ class Recipe extends React.Component {
   _renderRating() {
     const {
       recipe,
-      recipes,
+      ratings,
       showDetail,
     } = this.props;
 
-    const reducerRecipe: Object = get(recipes, recipe.id, {});
-    const rating: number = reducerRecipe.rating || recipe.rating;
-    const didSetStars: boolean = reducerRecipe.didSetStars || false;
+    const rating: number = ratings[recipe.id] || recipe.rating;
 
     return (
       <Col gutter={{ top: 'small', bottom: 'small' }} className={styles.rating}>
@@ -176,7 +176,7 @@ class Recipe extends React.Component {
           </Col>
 
           <Col size={6} className="text-right">
-            {Number(recipe.ratings) + (didSetStars ? 1 : 0)} Ratings
+            {Number(recipe.ratings) + (ratings[recipe.id] ? 1 : 0)} Ratings
           </Col>
         </Grid>
       </Col>
@@ -332,9 +332,23 @@ class Recipe extends React.Component {
   }
 }
 
-
 function mapStateToProps(state: Object): Object {
-  return { recipes: state.recipesReducer };
+  const {
+    ratings,
+    favorites,
+  } = state.recipesReducer;
+
+  return {
+    ratings,
+    favorites,
+  };
 }
 
-export default connect(mapStateToProps)(Recipe);
+function mapDispatchToProps(dispatch: Function): Object {
+  return bindActionCreators({
+    setFavoriteAction,
+    setRatingAction,
+  }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Recipe);

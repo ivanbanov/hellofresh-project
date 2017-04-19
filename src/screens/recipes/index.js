@@ -1,21 +1,21 @@
 // @flow
 
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
+import { getRecipes as getRecipesAction } from 'src/actions/recipes';
 import bindAll from 'lodash/bindAll';
 import Header from 'src/screens/components/header';
+import Footer from 'src/screens/components/footer';
 import Col from 'src/ui/components/col';
 import Container from 'src/ui/components/container';
 import Grid from 'src/ui/components/grid';
 import classNames from 'classnames';
 import Recipe from './components/recipe';
-import { getRecipes as getRecipesAction } from 'src/actions/recipes';
 import styles from './styles.styl';
 
 type State = {
-  recipes: Array<Object>,
   recipeDetail: Object,
   showRecipeDetail: boolean,
 };
@@ -23,8 +23,17 @@ type State = {
 class RecipesScreen extends React.Component {
   static displayName = 'RecipesScreen';
 
-  state: State = {
+  static propTypes = {
+    recipes: PropTypes.arrayOf(PropTypes.object).isRequired,
+    getRecipesAction: PropTypes.func.isRequired,
+  };
+
+  static defaultProps = {
     recipes: [],
+    getRecipesAction: () => [],
+  };
+
+  state: State = {
     recipeDetail: {},
     showRecipeDetail: false,
   };
@@ -45,11 +54,8 @@ class RecipesScreen extends React.Component {
     ]);
   }
 
-  async componentDidMount() {
-    const { getRecipesAction: getRecipes } = this.props;
-    const response = await getRecipes();
-
-    this.setState({ recipes: response.data.recipes });
+  componentWillMount() {
+    this.props.getRecipesAction();
   }
 
   componentWillUnmount() {
@@ -71,7 +77,7 @@ class RecipesScreen extends React.Component {
   }
 
   _renderRecipes(): React$Element<*> {
-    const { recipes } = this.state;
+    const { recipes } = this.props;
 
     return (
       <Grid>
@@ -122,9 +128,7 @@ class RecipesScreen extends React.Component {
           {this._renderRecipes()}
         </Container>
 
-        <Col gutter={{ top: 'medium', bottom: 'large' }} className="text-center">
-          HelloFresh ®
-        </Col>
+        <Footer />
 
         {
           showRecipeDetail &&
@@ -147,8 +151,14 @@ class RecipesScreen extends React.Component {
   }
 }
 
-function mapDispatchToProps(dispatch) {
+function mapStateToProps(state: Object): Object {
+  const { recipes } = state.recipesReducer;
+
+  return { recipes };
+}
+
+function mapDispatchToProps(dispatch: Function): Object {
   return bindActionCreators({ getRecipesAction }, dispatch);
 }
 
-export default connect(() => ({}), mapDispatchToProps)(RecipesScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(RecipesScreen);

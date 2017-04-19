@@ -1,30 +1,34 @@
 import { ACTIONS } from 'src/constants';
 import api from 'src/api';
 
-function fetchRecipes(): Object {
+function fetchRecipes(recipes: Array<Object>): Object {
   return {
     type: ACTIONS.FETCH_RECIPES,
+    payload: { recipes },
   };
 }
 
-export function getRecipes(): Function {
-  return (dispatch) => {
-    dispatch(fetchRecipes());
-    return api.get('/recipes');
+export function getRecipes(): Promise {
+  return async (dispatch) => {
+    const response = await api.get('/recipes');
+
+    dispatch(fetchRecipes(response.data.recipes));
   };
 }
 
 export function setFavorite(id: string): Object {
   return {
     type: ACTIONS.SET_FAVORITE,
-    id,
+    payload: { id },
   };
 }
 
 export function setRating(id: string, value: number): Object {
   return {
     type: ACTIONS.SET_RATING,
-    id,
-    value,
+    payload: {
+      id,
+      value,
+    },
   };
 }
