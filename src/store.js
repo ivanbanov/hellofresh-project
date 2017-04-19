@@ -16,13 +16,23 @@ import authReducer from 'src/reducers/auth';
 import recipesReducer from 'src/reducers/recipes';
 import session from 'src/utils/auth/session';
 
-const reducers = combineReducers({
+const appReducer: Function = combineReducers({
   authReducer,
   recipesReducer,
 });
 
+const rootReducer: Function = (state, action) => {
+  let _state = state;
+
+  if (action.type === 'LOGOUT') {
+    _state = undefined;
+  }
+
+  return appReducer(_state, action);
+};
+
 export default createStore(
-  connectRouter(history)(reducers),
+  connectRouter(history)(rootReducer),
   {
     authReducer: {
       user: JSON.parse(session.getData('user')) || {},
